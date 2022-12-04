@@ -31,32 +31,27 @@ class GameScene {
     }
 
     private void randomFillNumber(int turn) {
-
         Cell[][] emptyCells = new Cell[n][n];
         int a = 0;
         int b = 0;
-        int aForBound=0,bForBound=0;
-        outer:
-        for (int i = 0; i < n; i++) {
+        int aForBound = 0, bForBound = 0;
+        outer: for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (cells[i][j].getNumber() == 0) {
                     emptyCells[a][b] = cells[i][j];
-                    if (b < n-1) {
-                        bForBound=b;
+                    if (b < n - 1) {
+                        bForBound = b;
                         b++;
-
                     } else {
-                        aForBound=a;
+                        aForBound = a;
                         a++;
                         b = 0;
-                        if(a==n)
+                        if (a == n)
                             break outer;
                     }
                 }
             }
         }
-
-
 
         Text text;
         Random random = new Random();
@@ -64,8 +59,8 @@ class GameScene {
         if (random.nextInt() % 2 == 0)
             putTwo = false;
         int xCell, yCell;
-            xCell = random.nextInt(aForBound+1);
-            yCell = random.nextInt(bForBound+1);
+        xCell = random.nextInt(aForBound + 1);
+        yCell = random.nextInt(bForBound + 1);
         if (putTwo) {
             text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
@@ -79,12 +74,12 @@ class GameScene {
         }
     }
 
-    private int  haveEmptyCell() {
+    private int haveEmptyCell() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (cells[i][j].getNumber() == 0)
                     return 1;
-                if(cells[i][j].getNumber() == 2048)
+                if (cells[i][j].getNumber() == 2048)
                     return 0;
             }
         }
@@ -93,53 +88,55 @@ class GameScene {
 
     private int passDestination(int i, int j, char direct) {
         int coordinate = j;
-        if (direct == 'l') {
-            for (int k = j - 1; k >= 0; k--) {
-                if (cells[i][k].getNumber() != 0) {
-                    coordinate = k + 1;
-                    break;
-                } else if (k == 0) {
-                    coordinate = 0;
+        switch (direct) {
+            case 'l': {
+                for (int k = j - 1; k >= 0; k--) {
+                    if (cells[i][k].getNumber() != 0) {
+                        coordinate = k + 1;
+                        break;
+                    } else if (k == 0) {
+                        coordinate = 0;
+                    }
                 }
+                return coordinate;
             }
-            return coordinate;
-        }
-        coordinate = j;
-        if (direct == 'r') {
-            for (int k = j + 1; k <= n - 1; k++) {
-                if (cells[i][k].getNumber() != 0) {
-                    coordinate = k - 1;
-                    break;
-                } else if (k == n - 1) {
-                    coordinate = n - 1;
+            case 'r': {
+                coordinate = j;
+                for (int k = j + 1; k <= n - 1; k++) {
+                    if (cells[i][k].getNumber() != 0) {
+                        coordinate = k - 1;
+                        break;
+                    } else if (k == n - 1) {
+                        coordinate = n - 1;
+                    }
                 }
+                return coordinate;
             }
-            return coordinate;
-        }
-        coordinate = i;
-        if (direct == 'd') {
-            for (int k = i + 1; k <= n - 1; k++) {
-                if (cells[k][j].getNumber() != 0) {
-                    coordinate = k - 1;
-                    break;
+            case 'd': {
+                coordinate = i;
+                for (int k = i + 1; k <= n - 1; k++) {
+                    if (cells[k][j].getNumber() != 0) {
+                        coordinate = k - 1;
+                        break;
 
-                } else if (k == n - 1) {
-                    coordinate = n - 1;
+                    } else if (k == n - 1) {
+                        coordinate = n - 1;
+                    }
                 }
+                return coordinate;
             }
-            return coordinate;
-        }
-        coordinate = i;
-        if (direct == 'u') {
-            for (int k = i - 1; k >= 0; k--) {
-                if (cells[k][j].getNumber() != 0) {
-                    coordinate = k + 1;
-                    break;
-                } else if (k == 0) {
-                    coordinate = 0;
+            case 'u': {
+                coordinate = i;
+                for (int k = i - 1; k >= 0; k--) {
+                    if (cells[k][j].getNumber() != 0) {
+                        coordinate = k + 1;
+                        break;
+                    } else if (k == 0) {
+                        coordinate = 0;
+                    }
                 }
+                return coordinate;
             }
-            return coordinate;
         }
         return -1;
     }
@@ -190,6 +187,24 @@ class GameScene {
 
     }
 
+    private void moveHorizontally(int i, int j, int des, int sign) {
+        if (isValidDesH(i, j, des, sign)) {
+            cells[i][j].adder(cells[i][des + sign]);
+            cells[i][des].setModify(true);
+        } else if (des != j) {
+            cells[i][j].changeCell(cells[i][des]);
+        }
+    }
+
+    private void moveVertically(int i, int j, int des, int sign) {
+        if (isValidDesV(i, j, des, sign)) {
+            cells[i][j].adder(cells[des + sign][j]);
+            cells[des][j].setModify(true);
+        } else if (des != i) {
+            cells[i][j].changeCell(cells[des][j]);
+        }
+    }
+
     private boolean isValidDesH(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0) {
             if (cells[i][des + sign].getNumber() == cells[i][j].getNumber() && !cells[i][des + sign].getModify()
@@ -200,15 +215,6 @@ class GameScene {
         return false;
     }
 
-    private void moveHorizontally(int i, int j, int des, int sign) {
-        if (isValidDesH(i, j, des, sign)) {
-            cells[i][j].adder(cells[i][des + sign]);
-            cells[i][des].setModify(true);
-        } else if (des != j) {
-            cells[i][j].changeCell(cells[i][des]);
-        }
-    }
-
     private boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0)
             if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
@@ -216,15 +222,6 @@ class GameScene {
                 return true;
             }
         return false;
-    }
-
-    private void moveVertically(int i, int j, int des, int sign) {
-        if (isValidDesV(i, j, des, sign)) {
-            cells[i][j].adder(cells[des + sign][j]);
-            cells[des][j].setModify(true);
-        } else if (des != i) {
-            cells[i][j].changeCell(cells[des][j]);
-        }
     }
 
     private boolean haveSameNumberNearly(int i, int j) {
@@ -263,7 +260,6 @@ class GameScene {
                 cells[i][j] = new Cell((j) * LENGTH + (j + 1) * distanceBetweenCells,
                         (i) * LENGTH + (i + 1) * distanceBetweenCells, LENGTH, root);
             }
-
         }
 
         Text text = new Text();
@@ -280,32 +276,38 @@ class GameScene {
         randomFillNumber(1);
         randomFillNumber(1);
 
-        gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key ->{
-                Platform.runLater(() -> {
-                    int haveEmptyCell;
-                    if (key.getCode() == KeyCode.DOWN) {
+        gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key -> {
+            Platform.runLater(() -> {
+                int haveEmptyCell;
+                switch (key.getCode()) {
+                    case DOWN:
                         GameScene.this.moveDown();
-                    } else if (key.getCode() == KeyCode.UP) {
+                        break;
+                    case UP:
                         GameScene.this.moveUp();
-                    } else if (key.getCode() == KeyCode.LEFT) {
+                        break;
+                    case LEFT:
                         GameScene.this.moveLeft();
-                    } else if (key.getCode() == KeyCode.RIGHT) {
+                        break;
+                    case RIGHT:
                         GameScene.this.moveRight();
+                        break;
+                    default:
+                        return;
+                }
+                GameScene.this.sumCellNumbersToScore();
+                scoreText.setText(score + "");
+                haveEmptyCell = GameScene.this.haveEmptyCell();
+                if (haveEmptyCell == -1) {
+                    if (GameScene.this.canNotMove()) {
+                        primaryStage.setScene(endGameScene);
+                        EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
+                        root.getChildren().clear();
+                        score = 0;
                     }
-                    GameScene.this.sumCellNumbersToScore();
-                    scoreText.setText(score + "");
-                    haveEmptyCell = GameScene.this.haveEmptyCell();
-                    if (haveEmptyCell == -1) {
-                        if (GameScene.this.canNotMove()) {
-                            primaryStage.setScene(endGameScene);
-
-                            EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
-                            root.getChildren().clear();
-                            score = 0;
-                        }
-                    } else if(haveEmptyCell == 1)
-                        GameScene.this.randomFillNumber(2);
-                });
+                } else if (haveEmptyCell == 1)
+                    GameScene.this.randomFillNumber(2);
             });
+        });
     }
 }
