@@ -22,7 +22,7 @@ public class Main extends Application {
     static final int HEIGHT = 900;
     private Group gameRoot = new Group();
     private Scene gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(189, 177, 92));
-    private static Scanner input= new Scanner(System.in);
+    // private static Scanner input= new Scanner(System.in);
 
     public void setGameScene(Scene gameScene) {
         this.gameScene = gameScene;
@@ -50,8 +50,7 @@ public class Main extends Application {
 
 
         Rectangle backgroundOfMenu = new Rectangle(240, 120, Color.rgb(120, 120, 120, 0.2));
-        backgroundOfMenu.setX(WIDTH / 2 - 120);
-        backgroundOfMenu.setY(180);
+        backgroundOfMenu.setX(WIDTH / 2 - 120); 
         menuRoot.getChildren().add(backgroundOfMenu);
 
         Rectangle backgroundOfMenuForPlay = new Rectangle(240, 140, Color.rgb(120, 20, 100, 0.2));
