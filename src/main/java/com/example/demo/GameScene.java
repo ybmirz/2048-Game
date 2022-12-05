@@ -22,6 +22,7 @@ public class GameScene {
     private Cell[][] cells = new Cell[n][n];
     private Group root;
     private long score = 0;
+    private static boolean isMoved = false;
 
     static void setN(int number) {
         n = number;
@@ -32,7 +33,7 @@ public class GameScene {
         return LENGTH;
     }
 
-    private void randomFillNumber(int turn) {
+    private void randomFillNumber() {
         Cell[][] emptyCells = new Cell[n][n];
         int a = 0;
         int b = 0;
@@ -55,6 +56,7 @@ public class GameScene {
             }
         }
 
+        // Create either 2 or 4 as a random number
         Text text;
         Random random = new Random();
         boolean putTwo = true;
@@ -69,7 +71,8 @@ public class GameScene {
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
         } else {
-            text = textMaker.madeText("4", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("4", emptyCells[xCell][yCell].getX(),
+                    emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(4);
@@ -148,9 +151,6 @@ public class GameScene {
             for (int j = 1; j < n; j++) {
                 moveHorizontally(i, j, passDestination(i, j, 'l'), -1);
             }
-            for (int j = 0; j < n; j++) {
-                cells[i][j].setModify(false);
-            }
         }
     }
 
@@ -159,9 +159,6 @@ public class GameScene {
             for (int j = n - 1; j >= 0; j--) {
                 moveHorizontally(i, j, passDestination(i, j, 'r'), 1);
             }
-            for (int j = 0; j < n; j++) {
-                cells[i][j].setModify(false);
-            }
         }
     }
 
@@ -169,9 +166,6 @@ public class GameScene {
         for (int j = 0; j < n; j++) {
             for (int i = 1; i < n; i++) {
                 moveVertically(i, j, passDestination(i, j, 'u'), -1);
-            }
-            for (int i = 0; i < n; i++) {
-                cells[i][j].setModify(false);
             }
         }
 
@@ -182,9 +176,6 @@ public class GameScene {
             for (int i = n - 1; i >= 0; i--) {
                 moveVertically(i, j, passDestination(i, j, 'd'), 1);
             }
-            for (int i = 0; i < n; i++) {
-                cells[i][j].setModify(false);
-            }
         }
 
     }
@@ -192,18 +183,24 @@ public class GameScene {
     private void moveHorizontally(int i, int j, int des, int sign) {
         if (isValidDesH(i, j, des, sign)) {
             cells[i][j].adder(cells[i][des + sign]);
-            cells[i][des].setModify(true);
+            cells[i][des + sign].setModify(true);
+            isMoved = true;
         } else if (des != j) {
             cells[i][j].changeCell(cells[i][des]);
+            if (cells[des][j].getNumber() != 0)
+                isMoved = true;
         }
     }
 
     private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             cells[i][j].adder(cells[des + sign][j]);
-            cells[des][j].setModify(true);
+            cells[des + sign][j].setModify(true);
+            isMoved = true;
         } else if (des != i) {
             cells[i][j].changeCell(cells[des][j]);
+            if (cells[des][j].getNumber() != 0)
+                isMoved = true;
         }
     }
 
@@ -218,11 +215,12 @@ public class GameScene {
     }
 
     private boolean isValidDesV(int i, int j, int des, int sign) {
-        if (des + sign < n && des + sign >= 0)
+        if (des + sign < n && des + sign >= 0) {
             if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
                     && cells[des + sign][j].getNumber() != 0) {
                 return true;
             }
+        }
         return false;
     }
 
@@ -247,12 +245,16 @@ public class GameScene {
         return true;
     }
 
+    // Use the modified cell property to determine the sum
     private void sumCellNumbersToScore() {
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++) {
-                score += cells[i][j].getNumber();
+                // Only some when the cell has been modified at this turn
+                if (cells[i][j].getModify())
+                    score += cells[i][j].getNumber();
+                // Remove all extra modified values
+                cells[i][j].setModify(false);
             }
-        }
     }
 
     void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
@@ -275,8 +277,9 @@ public class GameScene {
         scoreText.setFont(Font.font(20));
         scoreText.setText("0");
 
-        randomFillNumber(1);
-        randomFillNumber(1);
+        // Create two random span
+        randomFillNumber();
+        randomFillNumber();
 
         gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key -> {
             Platform.runLater(() -> {
@@ -297,8 +300,11 @@ public class GameScene {
                     default:
                         return;
                 }
+                // Get sum of modified cells
                 GameScene.this.sumCellNumbersToScore();
+                // Set score text
                 scoreText.setText(score + "");
+                // Decide end game
                 haveEmptyCell = GameScene.this.haveEmptyCell();
                 if (haveEmptyCell == -1) {
                     if (GameScene.this.canNotMove()) {
@@ -307,8 +313,10 @@ public class GameScene {
                         root.getChildren().clear();
                         score = 0;
                     }
-                } else if (haveEmptyCell == 1)
-                    GameScene.this.randomFillNumber(2);
+                } else if (haveEmptyCell == 1 && isMoved) {
+                    GameScene.this.randomFillNumber();
+                    isMoved = false;
+                }
             });
         });
     }

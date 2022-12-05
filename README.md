@@ -4,3 +4,10 @@
 
 Things I just did:
 - Removed `module-info.java` from the codebase bc VSC references the library for me (may have to change when compiling for Eclipse) (also because JDK16)
+
+### Changes
+**Game Logic**
+- Fixed scoring issue (now only adds proper scoring)
+- Fixed spawning (only spawn when the board can be moved)
+- Fixed additional keys could move the board
+- Fixed modified cells (sets the correct cells to be modified)
