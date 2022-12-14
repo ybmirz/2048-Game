@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 
 import java.util.Random;
 
@@ -267,7 +268,7 @@ public class GameScene {
             }
     }
 
-    public void game(Scene gameScene, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
+    public void game(Scene gameScene, Stage primaryStage, Group endGroup) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 cells[i][j] = new Cell((j) * LENGTH + (j + 1) * distanceBetweenCells,
@@ -301,14 +302,16 @@ public class GameScene {
                 // Get sum of modified cells
                 GameScene.this.sumCellNumbersToScore();
                 // Set score text
-                scoreText.setText(score + "");
+                scoreText.setText(String.format("%02d",score));
 
                 // Decide end game
                 haveEmptyCell = GameScene.this.haveEmptyCell();
                 if (haveEmptyCell == -1) {
                     if (GameScene.this.canNotMove()) {
-                        primaryStage.setScene(endGameScene);
-                        EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
+                        // Scene endGameScene = new Scene(endGroup, HEIGHT, LENGTH, Color.rgb(250, 20, 100, 0.2));
+                        // primaryStage.setScene(endGameScene);
+                        //EndGame.getInstance().endGameShow(gameScene, endGroup, primaryStage, score);
+                        endGroup.setVisible(true);
                         root.getChildren().clear();
                         score = 0;
                     }

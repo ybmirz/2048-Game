@@ -5,24 +5,26 @@ import com.example.demo.GameScene;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class GameController {
+public class GameController extends ReturningController {
 
     @FXML
     private AnchorPane gameAnchor;
 
     @FXML
     private Group gameGroup;
+
+    @FXML
+    private Group endGroup;
 
     @FXML
     private MenuBar gameMenuBar;
@@ -40,23 +42,33 @@ public class GameController {
     @FXML
     private Rectangle scoreTitleRec;
 
+    @FXML
+    private Button backBtn;
+
+    @FXML
+    private Button retryBtn;
+
+    @FXML
+    private Button saveScore;
+
     public void initialize() {
+        backBtn.setOpacity(0);
+        backBtn.setDisable(true);
+        endGroup.setVisible(false);
         new Thread(() -> {
             try {
                 Thread.sleep(750);
                 Platform.runLater(() -> {
                     Stage primaryStage = (Stage) gameAnchor.getScene().getWindow();
-                    Group endgameRoot = new Group();
-                    Scene endGameScene = new Scene(endgameRoot, 750, 750, Color.rgb(250, 20, 100, 0.2));
 
                     GameScene game = new GameScene(gameGroup, scoreText);
-                    game.game(gameAnchor.getScene(), primaryStage, endGameScene, endgameRoot);
-
+                    game.game(gameAnchor.getScene(), primaryStage, endGroup);
+                    gameGroup.requestFocus();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).run();
+        }).start();
 
         // Set a changed listener to the scoreText to edit the rec
         scoreText.textProperty().addListener(new ChangeListener<String>() {
@@ -72,9 +84,38 @@ public class GameController {
                         scoreRec.setWidth(scoreRec.getWidth() + 4);
                     }
                 }
+
             }
 
         });
+
+        endGroup.visibleProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                backBtn.setDisable(false);
+                backBtn.setOpacity(1);
+
+            }
+
+        });
+        ;
     }
 
+    @FXML
+    void backToMenu(ActionEvent event) {
+        Stage primStage = (Stage) this.backBtn.getScene().getWindow();
+        primStage.setScene(getPrevScene());
+        primStage.show();
+    }
+
+    @FXML
+    void retry(ActionEvent event) {
+
+    }
+
+    @FXML
+    void saveScore(ActionEvent event) {
+
+    }
 }
