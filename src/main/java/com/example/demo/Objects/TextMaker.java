@@ -2,6 +2,7 @@ package com.example.demo.Objects;
 
 import com.example.demo.GameScene;
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -19,7 +20,7 @@ public class TextMaker {
         return singleInstance;
     }
 
-    public Text madeText(String input, double xCell, double yCell, Group root) {
+    public Text madeText(String input, double xCell, double yCell, Pane root) {
         double length = GameScene.getLENGTH();
         double fontSize = (3 * length) / 7.0;
         Text text = new Text(input);
