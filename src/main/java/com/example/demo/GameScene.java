@@ -8,21 +8,31 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.media.AudioClip;
 
 import java.util.Random;
 
 import com.example.demo.Objects.*;
 
 public class GameScene {
-    private static int HEIGHT = 700;
+    private static int HEIGHT = 550 ;
     private static int n = 4;
     private final static int distanceBetweenCells = 10;
     private static double LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
+
     private TextMaker textMaker = TextMaker.getSingleInstance();
     private Cell[][] cells = new Cell[n][n];
+
     private Group root;
+    
     private long score = 0;
+    private Text scoreText;
     private static boolean isMoved = false;
+
+    public GameScene(Group gameRootGroup, Text scoreText) {
+        this.root = gameRootGroup;
+        this.scoreText = scoreText;
+    }
 
     static void setN(int number) {
         n = number;
@@ -187,7 +197,7 @@ public class GameScene {
             isMoved = true;
         } else if (des != j) {
             cells[i][j].changeCell(cells[i][des]);
-            if (cells[des][j].getNumber() != 0)
+            if (cells[i][des].getNumber() != 0)
                 isMoved = true;
         }
     }
@@ -257,25 +267,13 @@ public class GameScene {
             }
     }
 
-    void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
-        this.root = root;
+    public void game(Scene gameScene, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 cells[i][j] = new Cell((j) * LENGTH + (j + 1) * distanceBetweenCells,
                         (i) * LENGTH + (i + 1) * distanceBetweenCells, LENGTH, root);
             }
         }
-
-        Text text = new Text();
-        root.getChildren().add(text);
-        text.setText("SCORE :");
-        text.setFont(Font.font(30));
-        text.relocate(750, 100);
-        Text scoreText = new Text();
-        root.getChildren().add(scoreText);
-        scoreText.relocate(750, 150);
-        scoreText.setFont(Font.font(20));
-        scoreText.setText("0");
 
         // Create two random span
         randomFillNumber();
@@ -304,6 +302,7 @@ public class GameScene {
                 GameScene.this.sumCellNumbersToScore();
                 // Set score text
                 scoreText.setText(score + "");
+
                 // Decide end game
                 haveEmptyCell = GameScene.this.haveEmptyCell();
                 if (haveEmptyCell == -1) {

@@ -41,17 +41,11 @@ public class MenuController {
      * @param event argument event given by the FXML to Controller class
      */
     @FXML
-    void startGame(ActionEvent event) {
-        Group gameRoot = new Group();
-        Scene gameScene = new Scene(gameRoot, 750, 750, Color.rgb(189, 177, 92));
-        GameScene game = new GameScene();
-        Group endgameRoot = new  Group();
-        Scene endGameScene = new Scene(endgameRoot, 750, 750, Color.rgb(250, 20, 100, 0.2));
-
+    void startGame(ActionEvent event) throws IOException {
         // Gets primary stage from vBox
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
-        game.game(gameScene, gameRoot, primaryStage, endGameScene, endgameRoot);
-        primaryStage.setScene(gameScene);
+        Parent gameRoot = FXMLLoader.load(getClass().getResource("../scenes/GameScene.fxml"));
+        primaryStage.setScene(new Scene(gameRoot, UserSettings.HEIGHT, UserSettings.WIDTH, Color.rgb(189, 177, 92)));
         primaryStage.show();
     }
 

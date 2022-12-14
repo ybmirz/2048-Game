@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+
 public class Cell {
     private Rectangle rectangle;
     private Group root;
@@ -26,7 +27,7 @@ public class Cell {
         rectangle.setHeight(scale);
         rectangle.setWidth(scale);
         this.root = root;
-        rectangle.setFill(Color.rgb(224, 226, 226, 0.5));
+        rectangle.setFill(Color.rgb(201, 191, 180, 1));
         this.textClass = TextMaker.getSingleInstance().madeText("0", x, y, root);
         root.getChildren().add(rectangle);
     }
@@ -61,7 +62,7 @@ public class Cell {
     public void setColorByNumber(int number) {
         switch (number) {
             case 0:
-                rectangle.setFill(Color.rgb(224, 226, 226, 0.5));
+                rectangle.setFill(Color.rgb(201, 191, 180, 1));
                 break;
             case 2:
                 rectangle.setFill(Color.rgb(232, 255, 100, 0.5));
