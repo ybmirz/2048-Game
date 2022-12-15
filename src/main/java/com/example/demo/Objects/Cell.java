@@ -1,6 +1,7 @@
 package com.example.demo.Objects;
 
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -8,7 +9,7 @@ import javafx.scene.text.Text;
 
 public class Cell {
     private Rectangle rectangle;
-    private Group root;
+    private Pane root;
     private Text textClass;
     private boolean modify = false;
 
@@ -20,7 +21,7 @@ public class Cell {
         return modify;
     }
 
-    public Cell(double x, double y, double scale, Group root) {
+    public Cell(double x, double y, double scale, Pane root) {
         rectangle = new Rectangle();
         rectangle.setX(x);
         rectangle.setY(y);

@@ -6,6 +6,7 @@ public class UserSettings {
     public static Difficulty diff;
     public static int HEIGHT = 700;
     public static int WIDTH = 700;
+    
 
     enum Difficulty {
         EASY,

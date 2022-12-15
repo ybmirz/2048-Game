@@ -2,16 +2,12 @@ package com.example.demo.Controller;
 
 import java.io.IOException;
 
-import javax.swing.Action;
-
-import com.example.demo.GameScene;
 import com.example.demo.UserSettings;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -44,7 +40,10 @@ public class MenuController {
     void startGame(ActionEvent event) throws IOException {
         // Gets primary stage from vBox
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
-        Parent gameRoot = FXMLLoader.load(getClass().getResource("../scenes/GameScene.fxml"));
+        FXMLLoader gameLoad = new FXMLLoader(getClass().getResource("../Scenes/GameScene.fxml"));
+        Parent gameRoot = gameLoad.load();
+        GameController gameController = gameLoad.getController();
+        gameController.setPrevScene(menuVBox.getScene());
         primaryStage.setScene(new Scene(gameRoot, UserSettings.HEIGHT, UserSettings.WIDTH, Color.rgb(189, 177, 92)));
         primaryStage.show();
     }
@@ -52,8 +51,10 @@ public class MenuController {
     @FXML
     void openSettings(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
-        SettingsController.setPrevScene(menuVBox.getScene());
-        Parent settingsRoot = FXMLLoader.load(getClass().getResource("../scenes/SettingsScene.fxml"));
+        FXMLLoader settingsLoad = new FXMLLoader(getClass().getResource("../Scenes/SettingsScene.fxml"));
+        Parent settingsRoot = settingsLoad.load();
+        SettingsController settingsController = settingsLoad.getController();
+        settingsController.setPrevScene(menuVBox.getScene());
         primaryStage.setScene(new Scene(settingsRoot, UserSettings.HEIGHT, UserSettings.WIDTH));
         primaryStage.show();
     }   

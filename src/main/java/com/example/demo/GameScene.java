@@ -5,10 +5,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 
 import java.util.Random;
 
@@ -23,14 +25,14 @@ public class GameScene {
     private TextMaker textMaker = TextMaker.getSingleInstance();
     private Cell[][] cells = new Cell[n][n];
 
-    private Group root;
+    private Pane root;
     
     private long score = 0;
     private Text scoreText;
     private static boolean isMoved = false;
 
-    public GameScene(Group gameRootGroup, Text scoreText) {
-        this.root = gameRootGroup;
+    public GameScene(Pane gameRootPane, Text scoreText) {
+        this.root = gameRootPane;
         this.scoreText = scoreText;
     }
 
@@ -267,7 +269,7 @@ public class GameScene {
             }
     }
 
-    public void game(Scene gameScene, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
+    public void game(Scene gameScene, Stage primaryStage, Pane endGroup) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 cells[i][j] = new Cell((j) * LENGTH + (j + 1) * distanceBetweenCells,
@@ -301,16 +303,15 @@ public class GameScene {
                 // Get sum of modified cells
                 GameScene.this.sumCellNumbersToScore();
                 // Set score text
-                scoreText.setText(score + "");
+                scoreText.setText(String.format("%02d",score));
 
                 // Decide end game
                 haveEmptyCell = GameScene.this.haveEmptyCell();
                 if (haveEmptyCell == -1) {
                     if (GameScene.this.canNotMove()) {
-                        primaryStage.setScene(endGameScene);
-                        EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
-                        root.getChildren().clear();
+                        endGroup.setVisible(true);
                         score = 0;
+                        scoreText.setText(String.format("%02d",score));
                     }
                 } else if (haveEmptyCell == 1 && isMoved) {
                     GameScene.this.randomFillNumber();
