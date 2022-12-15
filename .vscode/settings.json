@@ -6,5 +6,9 @@
         "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.fxml.jar",
         "c:\\Program Files\\Java\\javafx-sdk-19\\lib\\javafx.graphics.jar",
         "c:\\Program Files\\Java\\javafx-sdk-20\\lib\\javafx.media.jar"
+    ],
+    "java.project.sourcePaths": [
+        "src/main/java",
+        "src/main/resources"
     ]
 }

@@ -40,7 +40,7 @@ public class MenuController {
     void startGame(ActionEvent event) throws IOException {
         // Gets primary stage from vBox
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
-        FXMLLoader gameLoad = new FXMLLoader(getClass().getResource("../scenes/GameScene.fxml"));
+        FXMLLoader gameLoad = new FXMLLoader(getClass().getResource("../Scenes/GameScene.fxml"));
         Parent gameRoot = gameLoad.load();
         GameController gameController = gameLoad.getController();
         gameController.setPrevScene(menuVBox.getScene());
@@ -51,7 +51,7 @@ public class MenuController {
     @FXML
     void openSettings(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
-        FXMLLoader settingsLoad = new FXMLLoader(getClass().getResource("../scenes/SettingsScene.fxml"));
+        FXMLLoader settingsLoad = new FXMLLoader(getClass().getResource("../Scenes/SettingsScene.fxml"));
         Parent settingsRoot = settingsLoad.load();
         SettingsController settingsController = settingsLoad.getController();
         settingsController.setPrevScene(menuVBox.getScene());

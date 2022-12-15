@@ -55,7 +55,7 @@
                               <Insets bottom="15.0" />
                            </VBox.margin>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Score:">
+                        <Text id="endScoreText" fx:id="endScoreText" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

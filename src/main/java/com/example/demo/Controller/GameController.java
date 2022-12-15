@@ -1,18 +1,38 @@
 package com.example.demo.Controller;
 
+import java.io.IOError;
+import java.io.IOException;
+
+import com.example.demo.EndGame;
 import com.example.demo.GameScene;
+import com.example.demo.UserSettings;
+import com.example.demo.Dialogs.SaveAccount;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GameController extends ReturningController {
@@ -21,10 +41,12 @@ public class GameController extends ReturningController {
     private AnchorPane gameAnchor;
 
     @FXML
-    private Group gameGroup;
+    private Pane gamePane;
 
     @FXML
-    private Group endGroup;
+    private Pane endPane;
+    @FXML
+    private Text endScoreText;
 
     @FXML
     private MenuBar gameMenuBar;
@@ -35,6 +57,7 @@ public class GameController extends ReturningController {
     @FXML
     private Text scoreText;
     private static int currentTextLength = 2;
+    private static long currentScore = 0;
 
     @FXML
     private Text scoreTitle;
@@ -54,16 +77,18 @@ public class GameController extends ReturningController {
     public void initialize() {
         backBtn.setOpacity(0);
         backBtn.setDisable(true);
-        endGroup.setVisible(false);
+        endPane.setBackground(Background.fill(Color.rgb(255, 255, 255, 0.4)));
+        endPane.setVisible(false);
+        gamePane.setBackground(Background.fill(Color.rgb(187, 173, 160, 1)));
         new Thread(() -> {
             try {
                 Thread.sleep(750);
                 Platform.runLater(() -> {
                     Stage primaryStage = (Stage) gameAnchor.getScene().getWindow();
 
-                    GameScene game = new GameScene(gameGroup, scoreText);
-                    game.game(gameAnchor.getScene(), primaryStage, endGroup);
-                    gameGroup.requestFocus();
+                    GameScene game = new GameScene(gamePane, scoreText);
+                    game.game(gameAnchor.getScene(), primaryStage, endPane);
+                    gamePane.requestFocus();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -84,38 +109,57 @@ public class GameController extends ReturningController {
                         scoreRec.setWidth(scoreRec.getWidth() + 4);
                     }
                 }
-
+                setScore(Long.parseLong(scoreText.getText()));
             }
 
         });
 
-        endGroup.visibleProperty().addListener(new ChangeListener<Boolean>() {
-
+        endPane.visibleProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
                 backBtn.setDisable(false);
                 backBtn.setOpacity(1);
-
+                EndGame.getInstance(endPane).updateGameScore(currentScore, endScoreText);
             }
-
         });
         ;
     }
 
+    private static void setScore(long score) {
+        if (score>currentScore)
+            currentScore = score;
+    }
+
     @FXML
     void backToMenu(ActionEvent event) {
-        Stage primStage = (Stage) this.backBtn.getScene().getWindow();
+        Stage primStage = (Stage) backBtn.getScene().getWindow();
         primStage.setScene(getPrevScene());
         primStage.show();
     }
 
     @FXML
-    void retry(ActionEvent event) {
-
+    void retry(ActionEvent event) throws IOException {
+        Stage primStage = (Stage) retryBtn.getScene().getWindow();
+        FXMLLoader gameLoad = new FXMLLoader(getClass().getResource("../Scenes/GameScene.fxml"));
+        Parent gameRoot = gameLoad.load();
+        GameController gameController = gameLoad.getController();
+        gameController.setPrevScene(retryBtn.getScene());
+        primStage.setScene(new Scene(gameRoot, UserSettings.HEIGHT, UserSettings.WIDTH, Color.rgb(189, 177, 92)));
+        primStage.show();
     }
 
     @FXML
-    void saveScore(ActionEvent event) {
-
+    void saveScore(ActionEvent event) throws IOException {
+        Stage popupStage = new Stage();
+        FXMLLoader saveLoad = new FXMLLoader(SaveAccount.class.getResource("SaveAccount.fxml"));
+        Parent saveRoot = saveLoad.load();
+        SaveAccount saveController = saveLoad.getController();
+        saveController.setPopupStage(popupStage);
+        
+        Scene saveScene = new Scene(saveRoot);
+        popupStage.setScene(saveScene);
+        popupStage.setTitle("Save Score");
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.showAndWait();
     }
 }
