@@ -7,16 +7,20 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Account implements Comparable<Account> {
     private long score = 0;
-    private String userName ;
+    private String userName;
     public static ArrayList<Account> accounts = new ArrayList<Account>();
+    private static FileWriter accountsFileWriter = null;
 
-    public Account(String userName){
-        this.userName=userName;
+    public Account(String userName) {
+        this.userName = userName;
     }
 
     @Override
@@ -36,9 +40,9 @@ public class Account implements Comparable<Account> {
         return userName;
     }
 
-    static Account getAccountbyUsername(String userName){
-        for(Account account : accounts){
-            if(account.getUserName().equals(userName)){
+    static Account getAccountbyUsername(String userName) {
+        for (Account account : accounts) {
+            if (account.getUserName().equals(userName)) {
                 return account;
             }
         }
@@ -46,19 +50,37 @@ public class Account implements Comparable<Account> {
 
     }
 
-    public static Account makeNewAccount(String userName, long score){
+    public static Account makeNewAccount(String userName, long score) {
         // Return an existing account if exists
         Account check = getAccountbyUsername(userName);
-        if (check!=null) {
+        if (check != null) {
             check.addToScore(score);
             return check;
-        } 
+        }
         // else create new account if does not exist
         Account account = new Account(userName);
-        account.addToScore(score); 
+        account.addToScore(score);
         // Need to update to the leaderboards as well
         accounts.add(account);
         return account;
+    }
+
+    public static void updateFile() throws IOException {
+        try {
+            accountsFileWriter = new FileWriter("scores.txt");
+            for (Account a : accounts) {
+                String newUsername = a.getUserName();
+                newUsername.replace(' ', '_');
+                accountsFileWriter.write(newUsername + " " + a.getScore());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (accountsFileWriter != null){
+                accountsFileWriter.flush();
+                accountsFileWriter.close();
+            }
+        }
     }
 
 }

@@ -44,8 +44,6 @@ public class SaveAccount {
     @FXML
     void save(ActionEvent event) {
         String newUsername = usernameText.getText();
-        newUsername.replace(' ', '_');
-
         newAcc = Account.makeNewAccount(newUsername, score);
         closeStage();
     }

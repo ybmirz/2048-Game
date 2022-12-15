@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import java.io.IOException;
 
 import com.example.demo.UserSettings;
+import com.example.demo.Objects.Account;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -30,6 +31,9 @@ public class MenuController {
     @FXML
     private Button startBtn;
 
+    @FXML
+    private Button leaderboardBtn;
+
     /**
      * onAction Event for the button specified in the FXML
      * Button will start the game by creating the game scene
@@ -49,6 +53,11 @@ public class MenuController {
     }
 
     @FXML
+    void openLeaderboard(ActionEvent event) {
+
+    }
+
+    @FXML
     void openSettings(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
         FXMLLoader settingsLoad = new FXMLLoader(getClass().getResource("../Scenes/SettingsScene.fxml"));
@@ -60,7 +69,9 @@ public class MenuController {
     }   
 
     @FXML
-    void quitMenu(ActionEvent event) {
+    void quitMenu(ActionEvent event) throws IOException{
+        // Update the scorelist first
+        Account.updateFile();
         Platform.exit();
         System.exit(0);
     }
