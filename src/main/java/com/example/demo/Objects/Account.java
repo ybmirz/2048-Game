@@ -13,7 +13,7 @@ import java.util.Collections;
 public class Account implements Comparable<Account> {
     private long score = 0;
     private String userName ;
-    private static ArrayList<Account> accounts = new ArrayList<>();
+    public static ArrayList<Account> accounts = new ArrayList<Account>();
 
     public Account(String userName){
         this.userName=userName;
@@ -28,15 +28,15 @@ public class Account implements Comparable<Account> {
         this.score += score;
     }
 
-    private long getScore() {
+    public long getScore() {
         return score;
     }
 
-    private String getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    static Account accountHaveBeenExist(String userName){
+    static Account getAccountbyUsername(String userName){
         for(Account account : accounts){
             if(account.getUserName().equals(userName)){
                 return account;
@@ -46,8 +46,17 @@ public class Account implements Comparable<Account> {
 
     }
 
-    static Account makeNewAccount(String userName){
+    public static Account makeNewAccount(String userName, long score){
+        // Return an existing account if exists
+        Account check = getAccountbyUsername(userName);
+        if (check!=null) {
+            check.addToScore(score);
+            return check;
+        } 
+        // else create new account if does not exist
         Account account = new Account(userName);
+        account.addToScore(score); 
+        // Need to update to the leaderboards as well
         accounts.add(account);
         return account;
     }

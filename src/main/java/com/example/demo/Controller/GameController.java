@@ -126,6 +126,7 @@ public class GameController extends ReturningController {
     }
 
     private static void setScore(long score) {
+        // Only save the highest current score
         if (score>currentScore)
             currentScore = score;
     }
@@ -155,6 +156,7 @@ public class GameController extends ReturningController {
         Parent saveRoot = saveLoad.load();
         SaveAccount saveController = saveLoad.getController();
         saveController.setPopupStage(popupStage);
+        saveController.setScore(currentScore);
         
         Scene saveScene = new Scene(saveRoot);
         popupStage.setScene(saveScene);
