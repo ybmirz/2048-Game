@@ -12,12 +12,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+import com.example.demo.UserSettings;
 
 public class Account implements Comparable<Account> {
     private long score = 0;
     private String userName;
     public static ArrayList<Account> accounts = new ArrayList<Account>();
     private static FileWriter accountsFileWriter = null;
+    private static File accountsFile = null;
 
     public Account(String userName) {
         this.userName = userName;
@@ -67,11 +72,11 @@ public class Account implements Comparable<Account> {
 
     public static void updateFile() throws IOException {
         try {
-            accountsFileWriter = new FileWriter("scores.txt");
+            accountsFileWriter = new FileWriter(UserSettings.savingFileName + ".txt");
             for (Account a : accounts) {
                 String newUsername = a.getUserName();
                 newUsername.replace(' ', '_');
-                accountsFileWriter.write(newUsername + " " + a.getScore());
+                accountsFileWriter.write(newUsername + " " + a.getScore() + "\n");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,6 +86,32 @@ public class Account implements Comparable<Account> {
                 accountsFileWriter.close();
             }
         }
+    }
+
+    public static void readFile() throws IOException, Exception {
+        accountsFile = new File(UserSettings.savingFileName + ".txt");
+        Scanner readScan = new Scanner(accountsFile);
+        ArrayList<String> inputList = new ArrayList<String>();
+        while (readScan.hasNextLine()) {
+            String data = readScan.nextLine();
+            inputList.add(data);
+        }
+        readScan.close();
+        accounts = parseListToAccs(inputList);
+    }
+
+    private static ArrayList<Account> parseListToAccs(ArrayList<String> input) throws Exception {
+        ArrayList<Account> accList = new ArrayList<Account>();
+        for (String s: input) {
+            String[] values = s.split(" ");
+            if (values.length > 2) 
+                throw new Exception("Error parsing the text file. More than 2 words exist");
+            values[0].replace('_', ' ');
+            Account a = new Account(values[0]);
+            a.addToScore(Long.parseLong(values[1]));
+            accList.add(a);
+        }
+        return accList;
     }
 
 }

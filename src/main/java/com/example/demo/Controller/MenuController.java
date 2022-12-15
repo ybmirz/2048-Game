@@ -53,8 +53,14 @@ public class MenuController {
     }
 
     @FXML
-    void openLeaderboard(ActionEvent event) {
-
+    void openLeaderboard(ActionEvent event) throws IOException {
+        Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
+        FXMLLoader lbLoad = new FXMLLoader(getClass().getResource("../Scenes/Leaderboard.fxml"));
+        Parent lbRoot = lbLoad.load();
+        LeaderboardController lbControl = lbLoad.getController();
+        lbControl.setPrevScene(menuVBox.getScene());
+        primaryStage.setScene(new Scene(lbRoot, UserSettings.HEIGHT, UserSettings.WIDTH));
+        primaryStage.show();
     }
 
     @FXML
