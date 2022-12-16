@@ -11,3 +11,5 @@ Things I just did:
 - Fixed spawning (only spawn when the board can be moved)
 - Fixed additional keys could move the board
 - Fixed modified cells (sets the correct cells to be modified)
+
+UPDATED README.md find on the Github

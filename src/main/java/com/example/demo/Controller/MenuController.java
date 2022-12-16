@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.example.demo.UserSettings;
@@ -12,10 +13,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MenuController {
 
@@ -104,5 +109,52 @@ public class MenuController {
         Platform.exit();
         System.exit(0);
     }
+
+    //#region menuBar
+    @FXML
+    private MenuBar menuBar;
+
+    @FXML
+    private MenuItem chooseSaveFile;
+
+    @FXML
+    private MenuItem closeWindow;
+
+    @FXML
+    private MenuItem howToPlay;
+
+    @FXML
+    private MenuItem about;
+
+    @FXML
+    void howToPlay(ActionEvent event) {
+        // Open browser on how to play
+    }
+
+    @FXML
+    void chooseSaveFile(ActionEvent event) {
+        Stage prim = (Stage) this.menuBar.getScene().getWindow();
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Choose Saving File");
+        fc.getExtensionFilters().add(new ExtensionFilter("Empty Text File", "*.txt"));
+        File file = fc.showOpenDialog(prim);
+
+        if (file != null)
+            UserSettings.savingFileName = file.getPath()
+                    .substring(file.getPath().lastIndexOf('\\') + 1);
+    }
+
+    @FXML
+    void closeWindow(ActionEvent event) throws IOException {
+        Account.updateFile();
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    void about(ActionEvent event) {
+
+    }
+    //#endregion
 
 }

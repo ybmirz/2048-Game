@@ -135,6 +135,9 @@ public class Account implements Comparable<Account> {
      */
     public static void readFile() throws IOException, Exception {
         accountsFile = new File(UserSettings.savingFileName + ".txt");
+        if (!accountsFile.exists()){
+            accountsFileWriter = new FileWriter(UserSettings.savingFileName + ".txt");
+        }
         Scanner readScan = new Scanner(accountsFile);
         ArrayList<String> inputList = new ArrayList<String>();
         while (readScan.hasNextLine()) {

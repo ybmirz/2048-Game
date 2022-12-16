@@ -1,0 +1,31 @@
+.root {
+    -fx-background: #FAF8EF;
+    -primary-color: #8F7A66;
+    /* --back-color:  #FAF8EF;
+    --primary-color: #8F7A66;
+    --secondary-color: #BBADA0;
+    --accent-color: #BBADA0; */
+}
+
+/* .vbox {
+    -fx-background-color: var(--back-color);
+}
+
+.anchorPane {
+    -fx-background-color: var(--back-color);
+}
+
+.menubar {
+    -fx-background-color: var(--accent-color);
+} */
+
+.button{
+    -fx-text-fill: -fx-background;
+    -fx-background-color: -primary-color;
+}
+
+.button: hover {
+    -fx-opacity: 0.8;
+}
+
+

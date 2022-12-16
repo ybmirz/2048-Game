@@ -1,16 +1,20 @@
 package com.example.demo.Controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 import com.example.demo.UserSettings;
 import com.example.demo.Dialogs.SaveAccount;
+import com.example.demo.Objects.Account;
 import com.example.demo.UserSettings.Difficulty;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -105,8 +109,7 @@ public class SettingsController extends ReturningController {
         }).start();
     }
 
-    
-    /** 
+    /**
      * @param event
      */
     @FXML
@@ -273,5 +276,52 @@ public class SettingsController extends ReturningController {
                     .substring(fileChosen.getPath().lastIndexOf('/') + 1));
     }
 
+    // #endregion
+
+    // #region menuBar
+    @FXML
+    private MenuBar menuBar;
+
+    @FXML
+    private MenuItem chooseSaveFile;
+
+    @FXML
+    private MenuItem closeWindow;
+
+    @FXML
+    private MenuItem howToPlay;
+
+    @FXML
+    private MenuItem about;
+
+    @FXML
+    void howToPlay(ActionEvent event) {
+        // Open browser on how to play
+    }
+
+    @FXML
+    void chooseSaveFile(ActionEvent event) {
+        Stage prim = (Stage) this.menuBar.getScene().getWindow();
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Choose Saving File");
+        fc.getExtensionFilters().add(new ExtensionFilter("Empty Text File", "*.txt"));
+        File file = fc.showOpenDialog(prim);
+
+        if (file != null)
+            UserSettings.savingFileName = file.getPath()
+                    .substring(file.getPath().lastIndexOf('\\') + 1);
+    }
+
+    @FXML
+    void closeWindow(ActionEvent event) throws IOException {
+        Account.updateFile();
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    void about(ActionEvent event) {
+
+    }
     // #endregion
 }

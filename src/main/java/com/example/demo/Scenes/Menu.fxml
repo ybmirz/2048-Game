@@ -11,18 +11,18 @@
 
 <VBox id="menuVBox" fx:id="menuVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller.MenuController">
    <children>
-      <MenuBar>
+      <MenuBar fx:id="menuBar">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Choose Save File..." />
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="chooseSaveFile" mnemonicParsing="false" onAction="#chooseSaveFile" text="Choose Save File..." />
+                  <MenuItem fx:id="closeWindow" mnemonicParsing="false" onAction="#closeWindow" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
                <items>
-                  <MenuItem mnemonicParsing="false" text="How to Play" />
-                  <MenuItem mnemonicParsing="false" text="About.." />
+                  <MenuItem fx:id="howToPlay" mnemonicParsing="false" onAction="#howToPlay" text="How to Play" />
+                  <MenuItem fx:id="about" mnemonicParsing="false" onAction="#about" text="About.." />
                </items>
             </Menu>
          </menus>
