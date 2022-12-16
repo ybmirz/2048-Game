@@ -42,7 +42,7 @@ public class Cell {
         rectangle.setWidth(scale);
         this.root = root;
         rectangle.setFill(Color.rgb(201, 191, 180, 1));
-        this.textClass = TextMaker.getSingleInstance().madeText("0", x, y, root);
+        this.textClass = TextMaker.getSingleInstance().makeText("0", x, y, root);
         root.getChildren().add(rectangle);
     }
 

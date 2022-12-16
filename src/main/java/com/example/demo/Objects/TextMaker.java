@@ -25,7 +25,7 @@ public class TextMaker {
      * @param root
      * @return Text
      */
-    public Text madeText(String input, double xCell, double yCell, Pane root) {
+    public Text makeText(String input, double xCell, double yCell, Pane root) {
         double length = GameScene.getLENGTH();
         double fontSize = (3 * length) / 7.0;
         Text text = new Text(input);
