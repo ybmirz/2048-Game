@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-// import com.example.demo.Dialogs.SaveAccount;
+import com.example.demo.Dialogs.SaveAccount;
 import com.example.demo.Objects.Account;
 
 public class Main extends Application {
@@ -30,11 +30,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Setting the primary stage
         primaryStage.setTitle("2048");
-        // primaryStage.getIcons().add(new Image(SaveAccount.class.getResourceAsStream("../logo.png")));
+        primaryStage.getIcons().add(new Image(SaveAccount.class.getResourceAsStream("../logo.png")));
         // Read the text file when the game starts
         Account.readFile();
         // Set default CSS
-        // UserSettings.pathToCSS = SaveAccount.class.getResource("../Themes/original.css");
+        UserSettings.pathToCSS = SaveAccount.class.getResource("../Themes/original.css");
 
         Parent menuRoot = FXMLLoader.load(getClass().getResource("./scenes/Menu.fxml"));
         Scene menuScene = new Scene(menuRoot, UserSettings.WIDTH, UserSettings.HEIGHT);
