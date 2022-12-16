@@ -7,7 +7,7 @@ import java.io.IOException;
 import com.example.demo.EndGame;
 import com.example.demo.GameScene;
 import com.example.demo.UserSettings;
-import com.example.demo.Dialogs.SaveAccount;
+// import com.example.demo.Dialogs.SaveAccount;
 import com.example.demo.Objects.Account;
 
 import javafx.application.Platform;
@@ -194,18 +194,18 @@ public class GameController extends ReturningController {
      */
     @FXML
     void saveScore(ActionEvent event) throws IOException {
-        Stage popupStage = new Stage();
-        FXMLLoader saveLoad = new FXMLLoader(SaveAccount.class.getResource("SaveAccount.fxml"));
-        Parent saveRoot = saveLoad.load();
-        SaveAccount saveController = saveLoad.getController();
-        saveController.setPopupStage(popupStage);
-        saveController.setScore(currentScore);
+        // Stage popupStage = new Stage();
+        // FXMLLoader saveLoad = new FXMLLoader(SaveAccount.class.getResource("SaveAccount.fxml"));
+        // Parent saveRoot = saveLoad.load();
+        // SaveAccount saveController = saveLoad.getController();
+        // saveController.setPopupStage(popupStage);
+        // saveController.setScore(currentScore);
 
-        Scene saveScene = new Scene(saveRoot);
-        popupStage.setScene(saveScene);
-        popupStage.setTitle("Save Score");
-        popupStage.initModality(Modality.WINDOW_MODAL);
-        popupStage.showAndWait();
+        // Scene saveScene = new Scene(saveRoot);
+        // popupStage.setScene(saveScene);
+        // popupStage.setTitle("Save Score");
+        // popupStage.initModality(Modality.WINDOW_MODAL);
+        // popupStage.showAndWait();
     }
 
 

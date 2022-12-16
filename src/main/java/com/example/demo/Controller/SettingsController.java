@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import com.example.demo.UserSettings;
-import com.example.demo.Dialogs.SaveAccount;
+// import com.example.demo.Dialogs.SaveAccount;
 import com.example.demo.Objects.Account;
 import com.example.demo.UserSettings.Difficulty;
 
@@ -216,17 +216,17 @@ public class SettingsController extends ReturningController {
     private void updateImage() {
         diffImagePane.getChildren().clear();
         Image img = null;
-        switch (settDiff) {
-            case EASY:
-                img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 3x3.jpg"));
-                break;
-            case MEDIUM:
-                img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 4x4.png"));
-                break;
-            case HARD:
-                img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 5x5.jpg"));
-                break;
-        }
+        // switch (settDiff) {
+        //     case EASY:
+        //         img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 3x3.jpg"));
+        //         break;
+        //     case MEDIUM:
+        //         img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 4x4.png"));
+        //         break;
+        //     case HARD:
+        //         img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 5x5.jpg"));
+        //         break;
+        // }
         ImageView iv1 = new ImageView(img);
         iv1.setFitWidth(155);
         iv1.setFitHeight(150);
