@@ -1,5 +1,8 @@
 package com.example.demo.Controller;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
 import com.example.demo.UserSettings;
 import com.example.demo.Dialogs.SaveAccount;
 import com.example.demo.UserSettings.Difficulty;
@@ -15,7 +18,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class SettingsController extends ReturningController {
 
@@ -50,6 +55,20 @@ public class SettingsController extends ReturningController {
     @FXML
     private Text settingsTextTitle;
 
+    @FXML
+    private Button themeCombo;
+    private File fileChosen = null;
+
+    @FXML
+    private Text selectedTitle;
+
+    /**
+     * Initialize LeaderboardController; Method calledback when the FXML Scene
+     * loaded. Created to set up the layout of the settings page, and setting up the
+     * necesary details of the page
+     * 
+     * @author Mirza Hizriyan
+     */
     public void initialize() {
         // Set the buttons
         diffLeftBtn.setStyle("-size: 26;" +
@@ -78,28 +97,119 @@ public class SettingsController extends ReturningController {
                 updateButtons();
                 updateImage();
                 updateText();
+
+                if (UserSettings.pathToCSS != null)
+                    selectedTitle.setText("Selected: " + UserSettings.pathToCSS.getPath()
+                            .substring(UserSettings.pathToCSS.getPath().lastIndexOf('/') + 1));
             });
         }).start();
     }
 
+    
+    /** 
+     * @param event
+     */
+    @FXML
+    void returnMenu(ActionEvent event) {
+        Stage primStage = (Stage) this.backBtn.getScene().getWindow();
+        primStage.setScene(this.getPrevScene());
+        primStage.show();
+    }
+
+    /**
+     * Sets all the necessary user settings, such as difficulty and themepath
+     * Callback when Apply button is pressed
+     * 
+     * @param event
+     * @author Mirza Hizriyan
+     * @throws MalformedURLException
+     */
+    @FXML
+    void applySettings(ActionEvent event) throws MalformedURLException {
+        UserSettings.diff = settDiff;
+        if (fileChosen != null)
+            UserSettings.pathToCSS = fileChosen.toURI().toURL();
+    }
+
+    // #region Difficulty Settings
+    /**
+     * Button callback to decrease the difficulty
+     * Simply renders the new chosen option, only applies when the apply button is
+     * pressed
+     * 
+     * @param event
+     * @author Mirza Hizriyan
+     */
+    @FXML
+    void decreaseDiff(ActionEvent event) {
+        switch (settDiff) {
+            case EASY:
+                System.out.println("Error: Easy Difficulty tried to decrease.");
+                break;
+            case MEDIUM:
+                settDiff = Difficulty.EASY;
+                break;
+            case HARD:
+                settDiff = Difficulty.MEDIUM;
+                break;
+        }
+        updateButtons();
+        updateImage();
+        updateText();
+    }
+
+    /**
+     * Button callback to increase the difficulty
+     * Simply renders the new chosen option, only applies when the apply button is
+     * pressed
+     * 
+     * @param event
+     * @author Mirza Hizriyan
+     */
+    @FXML
+    void increaseDiff(ActionEvent event) {
+        switch (settDiff) {
+            case EASY:
+                settDiff = Difficulty.MEDIUM;
+                break;
+            case MEDIUM:
+                settDiff = Difficulty.HARD;
+                break;
+            case HARD:
+                System.out.println("Error: Hard Difficulty tried to increase.");
+                break;
+        }
+        updateButtons();
+        updateImage();
+        updateText();
+    }
+
+    /**
+     * Updates the rendered Text based on current Difficulty
+     * 
+     * @author Mirza Hizriyan
+     */
     private void updateText() {
         switch (settDiff) {
             case EASY: {
-                diffTitle.setText("EASY");
+                diffTitle.setText("3x3");
                 break;
             }
             case MEDIUM: {
-                diffTitle.setText("MEDIUM");
+                diffTitle.setText("4x4");
                 break;
             }
 
             case HARD: {
-                diffTitle.setText("HARD");
+                diffTitle.setText("5x5");
                 break;
             }
         }
     }
 
+    /**
+     * Updates the rendered Image based on current Difficulty
+     */
     private void updateImage() {
         diffImagePane.getChildren().clear();
         Image img = null;
@@ -120,6 +230,9 @@ public class SettingsController extends ReturningController {
         diffImagePane.getChildren().addAll(iv1);
     }
 
+    /**
+     * Updates the rendered buttons' enabled based on current Difficulty
+     */
     private void updateButtons() {
         switch (settDiff) {
             case EASY:
@@ -136,60 +249,29 @@ public class SettingsController extends ReturningController {
                 break;
         }
     }
-
-    @FXML
-    void returnMenu(ActionEvent event) {
-        Stage primStage = (Stage) this.backBtn.getScene().getWindow();
-        primStage.setScene(this.getPrevScene());
-        primStage.show();
-    }
-
-    @FXML
-    void applySettings(ActionEvent event) {
-        UserSettings.diff = settDiff;
-
-        returnMenu(event);
-    }
-
-    // #region Difficulty Settings
-    @FXML
-    void decreaseDiff(ActionEvent event) {
-        switch (settDiff) {
-            case EASY:
-                System.out.println("Error: Easy Difficulty tried to decrease.");
-                break;
-            case MEDIUM:
-                settDiff = Difficulty.EASY;
-                break;
-            case HARD:
-                settDiff = Difficulty.MEDIUM;
-                break;
-        }
-        updateButtons();
-        updateImage();
-        updateText();
-    }
-
-    @FXML
-    void increaseDiff(ActionEvent event) {
-        switch (settDiff) {
-            case EASY:
-                settDiff = Difficulty.MEDIUM;
-                break;
-            case MEDIUM:
-                settDiff = Difficulty.HARD;
-                break;
-            case HARD:
-                System.out.println("Error: Hard Difficulty tried to increase.");
-                break;
-        }
-        updateButtons();
-        updateImage();
-        updateText();
-    }
     // #endregion
 
     // #region Theme
+    /**
+     * Change theme method callback when button is pressed to choose a theme file
+     * Sets the static filepath URL to the CSS file
+     * 
+     * @param event
+     * @author Mirza Hizriyan
+     */
+    @FXML
+    void changeTheme(ActionEvent event) throws MalformedURLException {
+        Stage prim = (Stage) this.themeCombo.getScene().getWindow();
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Choose Theme File");
+        fc.getExtensionFilters().add(new ExtensionFilter("Cascading Style Sheets (*.css)", "*.css"));
+        fileChosen = fc.showOpenDialog(prim);
+
+        // Change the text
+        if (fileChosen != null)
+            selectedTitle.setText("Selected: " + fileChosen.getPath()
+                    .substring(fileChosen.getPath().lastIndexOf('/') + 1));
+    }
 
     // #endregion
 }

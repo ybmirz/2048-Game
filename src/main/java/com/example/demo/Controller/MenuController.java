@@ -39,6 +39,7 @@ public class MenuController {
      * Button will start the game by creating the game scene
      * 
      * @param event argument event given by the FXML to Controller class
+     * @author Mirza Hizriyan
      */
     @FXML
     void startGame(ActionEvent event) throws IOException {
@@ -52,6 +53,13 @@ public class MenuController {
         primaryStage.show();
     }
 
+    /**
+     * onAction Event for the button specified in the FXML
+     * Button will open the leaderboard by creating the leaderboard scene
+     * 
+     * @param event argument event given by the FXML to Controller class
+     * @author Mirza Hizriyan
+     */
     @FXML
     void openLeaderboard(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
@@ -63,6 +71,13 @@ public class MenuController {
         primaryStage.show();
     }
 
+    /**
+     * onAction Event for the button specified in the FXML
+     * Button will open the settings page by creating the settings scene
+     * 
+     * @param event argument event given by the FXML to Controller class
+     * @author Mirza Hizriyan
+     */
     @FXML
     void openSettings(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
@@ -72,10 +87,18 @@ public class MenuController {
         settingsController.setPrevScene(menuVBox.getScene());
         primaryStage.setScene(new Scene(settingsRoot, UserSettings.HEIGHT, UserSettings.WIDTH));
         primaryStage.show();
-    }   
+    }
 
+    /**
+     * Quitting the game through the menu, and updating the scorelist
+     * before the application ends.
+     * 
+     * @param event
+     * @throws IOException
+     * @author Mirza Hizriyan
+     */
     @FXML
-    void quitMenu(ActionEvent event) throws IOException{
+    void quitMenu(ActionEvent event) throws IOException {
         // Update the scorelist first
         Account.updateFile();
         Platform.exit();

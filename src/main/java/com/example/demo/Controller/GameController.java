@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
@@ -74,6 +75,13 @@ public class GameController extends ReturningController {
     @FXML
     private Button saveScore;
 
+    /**
+     * Initialize GameController; Method calledback when the FXML Scene
+     * loaded. Created to set up the scene as necessary based on conditions,
+     * and additionally adding in Event Handlers.
+     * 
+     * @author Mirza Hizriyan
+     */
     public void initialize() {
         backBtn.setOpacity(0);
         backBtn.setDisable(true);
@@ -120,18 +128,32 @@ public class GameController extends ReturningController {
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
                 backBtn.setDisable(false);
                 backBtn.setOpacity(1);
-                EndGame.getInstance(endPane).updateGameScore(currentScore, endScoreText);
+                EndGame.getInstance(endPane).updateGameScore(currentScore);
+                endPane.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, key -> {
+                });
             }
         });
         ;
     }
 
+    /**
+     * Set the current score saved in the Controller, based off
+     * the GameScene logic
+     * 
+     * @param score Score passed to be assigned
+     * @author Mirza Hizriyan
+     */
     private static void setScore(long score) {
         // Only save the highest current score
-        if (score>currentScore)
+        if (score > currentScore)
             currentScore = score;
     }
 
+    /**
+     * ActionMethod for the Back to Menu button
+     * 
+     * @param event
+     */
     @FXML
     void backToMenu(ActionEvent event) {
         Stage primStage = (Stage) backBtn.getScene().getWindow();
@@ -139,6 +161,13 @@ public class GameController extends ReturningController {
         primStage.show();
     }
 
+    /**
+     * Callback method for Retry Button press after a Game Over.
+     * 
+     * @param event
+     * @throws IOException
+     * @author Mirza Hizriyan
+     */
     @FXML
     void retry(ActionEvent event) throws IOException {
         Stage primStage = (Stage) retryBtn.getScene().getWindow();
@@ -150,6 +179,14 @@ public class GameController extends ReturningController {
         primStage.show();
     }
 
+    /**
+     * Callback method for Save Score button press after a Game over,
+     * to save the score into the static Accounts array list.
+     * 
+     * @param event
+     * @throws IOException
+     * @author Mirza Hizriyan
+     */
     @FXML
     void saveScore(ActionEvent event) throws IOException {
         Stage popupStage = new Stage();
@@ -158,7 +195,7 @@ public class GameController extends ReturningController {
         SaveAccount saveController = saveLoad.getController();
         saveController.setPopupStage(popupStage);
         saveController.setScore(currentScore);
-        
+
         Scene saveScene = new Scene(saveRoot);
         popupStage.setScene(saveScene);
         popupStage.setTitle("Save Score");

@@ -1,70 +1,39 @@
 package com.example.demo;
 
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.util.Optional;
-
 
 public class EndGame {
     private static EndGame singleInstance = null;
     private Pane EndPane;
-    private EndGame(Pane endPane){
+
+    private EndGame(Pane endPane) {
         this.EndPane = endPane;
     }
-    public static EndGame getInstance(Pane endPane){
-        if(singleInstance == null)
-            singleInstance= new EndGame(endPane);
+
+    /**
+     * Creating a new instance of the EndGame
+     * 
+     * @param endPane Parent node of EndGame
+     * @return the Instance of EndGame
+     * @author Mirza Hizriyan-modified
+     */
+    public static EndGame getInstance(Pane endPane) {
+        if (singleInstance == null)
+            singleInstance = new EndGame(endPane);
         return singleInstance;
     }
 
-    public void updateGameScore(long score, Text endScoreText) {
-        endScoreText.setText(endScoreText.getText() + String.format(" %02d", score));
+    /**
+     * Update the game score into the scene node
+     * 
+     * @param score Score value to update
+     * @author Mirza Hizriyan
+     */
+    public void updateGameScore(long score) {
+        VBox endVbox = (VBox) EndPane.getChildren().get(0);
+        Text endScoreText = (Text) endVbox.getChildren().get(1);
+        endScoreText.setText("Score: " + String.format(" %02d", score));
     }
-    // public void endGameShow(Scene endGameScene, Group root, Stage primaryStage,long score){
-    //     Text text = new Text("GAME OVER");
-    //     text.relocate(250,250);
-    //     text.setFont(Font.font(80));
-    //     root.getChildren().add(text);
-
-
-    //     Text scoreText = new Text(score+"");
-    //     scoreText.setFill(Color.BLACK);
-    //     scoreText.relocate(250,600);
-    //     scoreText.setFont(Font.font(80));
-    //     root.getChildren().add(scoreText);
-
-    //     Button quitButton = new Button("QUIT");
-    //     quitButton.setPrefSize(100,30);
-    //     quitButton.setTextFill(Color.PINK);
-    //     root.getChildren().add(quitButton);
-    //     quitButton.relocate(100,800);
-    //     quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-    //         @Override
-    //         public void handle(MouseEvent event) {
-    //             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    //             alert.setTitle("Quit Dialog");
-    //             alert.setHeaderText("Quit from this page");
-    //             alert.setContentText("Are you sure?");
-
-    //             Optional<ButtonType> result = alert.showAndWait();
-    //             if (result.get() == ButtonType.OK){
-    //                 root.getChildren().clear();
-    //             }
-    //         }
-    //     });
-
-
-
-    // }
 }

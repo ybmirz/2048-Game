@@ -10,5 +10,7 @@
     "java.project.sourcePaths": [
         "src/main/java",
         "src/main/resources"
-    ]
+    ],
+    "docwriter.style": "Javadoc",
+    "docwriter.progress.trackClasses": false
 }

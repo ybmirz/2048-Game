@@ -1,11 +1,9 @@
 package com.example.demo.Objects;
 
-import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-
 
 public class Cell {
     private Rectangle rectangle;
@@ -13,14 +11,29 @@ public class Cell {
     private Text textClass;
     private boolean modify = false;
 
+    /**
+     * @param modify
+     */
     public void setModify(boolean modify) {
         this.modify = modify;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean getModify() {
         return modify;
     }
 
+    /**
+     * Cell constructor; A Cell is a Rectangle object that is shown
+     * into a Parent node and edited based on the Game Logic
+     * 
+     * @param x     X-Position of the cell
+     * @param y     Y-Position of the cell
+     * @param scale
+     * @param root  Parent node to add the cell
+     */
     public Cell(double x, double y, double scale, Pane root) {
         rectangle = new Rectangle();
         rectangle.setX(x);
@@ -33,10 +46,18 @@ public class Cell {
         root.getChildren().add(rectangle);
     }
 
+    /**
+     * @param textClass
+     */
     public void setTextClass(Text textClass) {
         this.textClass = textClass;
     }
 
+    /**
+     * Replacing a target cell with the current cell value.
+     * 
+     * @param cell Target cell
+     */
     public void changeCell(Cell cell) {
         TextMaker.changeTwoText(textClass, cell.getTextClass());
         root.getChildren().remove(cell.getTextClass());
@@ -52,6 +73,11 @@ public class Cell {
         cell.setColorByNumber(cell.getNumber());
     }
 
+    /**
+     * Adding another cell with the current cell object
+     * 
+     * @param cell Target cell
+     */
     public void adder(Cell cell) {
         cell.getTextClass().setText((cell.getNumber() + this.getNumber()) + "");
         textClass.setText("0");
@@ -60,6 +86,9 @@ public class Cell {
         setColorByNumber(getNumber());
     }
 
+    /**
+     * @param number
+     */
     public void setColorByNumber(int number) {
         switch (number) {
             case 0:
@@ -102,18 +131,30 @@ public class Cell {
 
     }
 
+    /**
+     * @return double
+     */
     public double getX() {
         return rectangle.getX();
     }
 
+    /**
+     * @return double
+     */
     public double getY() {
         return rectangle.getY();
     }
 
+    /**
+     * @return int
+     */
     public int getNumber() {
         return Integer.parseInt(textClass.getText());
     }
 
+    /**
+     * @return Text
+     */
     private Text getTextClass() {
         return textClass;
     }

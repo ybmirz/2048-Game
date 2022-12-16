@@ -23,7 +23,11 @@ public class SaveAccount {
     private Stage myStage;
     private long score;
 
-    public <T> void initialize() {
+    /**
+     * Callback when the SaveAccount dialog is ran
+     * Ensuring valid text
+     */
+    public void initialize() {
         // Emptry String
         if (usernameText.getText().isEmpty())
             saveScoreBtn.setDisable(true);
@@ -41,6 +45,11 @@ public class SaveAccount {
         });
     }
 
+    /**
+     * Saving to an account, into the static Account list
+     * 
+     * @param event
+     */
     @FXML
     void save(ActionEvent event) {
         String newUsername = usernameText.getText();
@@ -48,10 +57,20 @@ public class SaveAccount {
         closeStage();
     }
 
+    /**
+     * Set the private controller's score to pass into the acc
+     * 
+     * @param Score
+     */
     public void setScore(long Score) {
         this.score = Score;
     }
 
+    /**
+     * This scene is to be created in a popup stage, hence a new stage is needed
+     * 
+     * @param stage
+     */
     public void setPopupStage(Stage stage) {
         this.myStage = stage;
     }

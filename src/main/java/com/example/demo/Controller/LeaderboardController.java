@@ -39,6 +39,12 @@ public class LeaderboardController extends ReturningController {
 
     private ObservableList<AccountCell> accountsModel = null;
 
+    /**
+     * Initialize LeaderboardController; Method calledback when the FXML Scene
+     * loaded. Created to set up the table view, by reading the scores file
+     * 
+     * @author Mirza Hizriyan
+     */
     public void initialize() {
         leaderboard.setEditable(false);
         leaderboard.setPlaceholder(new Label("No current accounts are saved"));
@@ -55,6 +61,11 @@ public class LeaderboardController extends ReturningController {
         leaderboard.getSortOrder().setAll(scoreColumn);
     }
 
+    
+    /** 
+     * Return back to menu callback
+     * @param event
+     */
     @FXML
     void backMenu(ActionEvent event) {
         Stage primStage = (Stage) this.backBtn.getScene().getWindow();
@@ -62,6 +73,12 @@ public class LeaderboardController extends ReturningController {
         primStage.show();
     }
 
+    
+    /** 
+     * Reset button to clear static ArrayList of accounts and
+     * the leaderboard
+     * @param event
+     */
     @FXML
     void resetAccounts(ActionEvent event) {
         Account.accounts.clear();

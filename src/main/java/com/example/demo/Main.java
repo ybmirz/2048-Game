@@ -1,3 +1,7 @@
+/**
+ * It's a JavaFX application that reads a text file and displays the contents of the text file in a
+ * table view.
+ */
 package com.example.demo;
 
 import javafx.application.Application;
@@ -12,6 +16,14 @@ import com.example.demo.Dialogs.SaveAccount;
 import com.example.demo.Objects.Account;
 
 public class Main extends Application {
+
+    /**
+     * Generic start method overriding the application
+     * 
+     * @param primaryStage Primary Stage to show different FXML scenes
+     * @throws Exception Generic exception thrown when running the method
+     * @author Mirza Hizriyan-modified
+     */
     // private static Scanner input= new Scanner(System.in);
 
     @Override
@@ -21,9 +33,12 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image(SaveAccount.class.getResourceAsStream("../logo.png")));
         // Read the text file when the game starts
         Account.readFile();
-        
+        // Set default CSS
+        UserSettings.pathToCSS = SaveAccount.class.getResource("../Themes/original.css");
+
         Parent menuRoot = FXMLLoader.load(getClass().getResource("./scenes/Menu.fxml"));
         Scene menuScene = new Scene(menuRoot, UserSettings.WIDTH, UserSettings.HEIGHT);
+        menuScene.getStylesheets().add(UserSettings.pathToCSS.toExternalForm());
 
         primaryStage.setScene(menuScene);
         primaryStage.show();
@@ -37,6 +52,11 @@ public class Main extends Application {
         });
     }
 
+    /**
+     * Running the application
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
