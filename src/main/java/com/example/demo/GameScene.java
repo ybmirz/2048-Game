@@ -36,9 +36,10 @@ public class GameScene {
         this.scoreText = scoreText;
     }
 
-    static void setN(int number) {
+    public void setN(int number) {
         n = number;
         LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
+        cells = new Cell[n][n];
     }
 
     public static double getLENGTH() {

@@ -87,6 +87,7 @@ public class GameController extends ReturningController {
                     Stage primaryStage = (Stage) gameAnchor.getScene().getWindow();
 
                     GameScene game = new GameScene(gamePane, scoreText);
+                    game.setN(UserSettings.getGameDiff());
                     game.game(gameAnchor.getScene(), primaryStage, endPane);
                     gamePane.requestFocus();
                 });
