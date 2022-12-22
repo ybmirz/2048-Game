@@ -1,7 +1,6 @@
 package com.example.demo.Controller;
 
 import java.io.File;
-import java.io.IOError;
 import java.io.IOException;
 
 import com.example.demo.EndGame;
@@ -16,30 +15,22 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class GameController extends ReturningController {
 
@@ -176,10 +167,11 @@ public class GameController extends ReturningController {
     @FXML
     void retry(ActionEvent event) throws IOException {
         Stage primStage = (Stage) retryBtn.getScene().getWindow();
-        FXMLLoader gameLoad = new FXMLLoader(getClass().getResource("../Scenes/GameScene.fxml"));
+        File gameScene = new File("src/main/resources/com/example/demo/Scenes/GameScene.fxml");
+        FXMLLoader gameLoad = new FXMLLoader(gameScene.toURI().toURL());
         Parent gameRoot = gameLoad.load();
         GameController gameController = gameLoad.getController();
-        gameController.setPrevScene(retryBtn.getScene());
+        gameController.setPrevScene(this.getPrevScene());
         primStage.setScene(new Scene(gameRoot, UserSettings.HEIGHT, UserSettings.WIDTH, Color.rgb(189, 177, 92)));
         primStage.show();
     }

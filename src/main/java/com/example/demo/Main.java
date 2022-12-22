@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 
 import com.example.demo.Dialogs.SaveAccount;
@@ -30,13 +32,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Setting the primary stage
         primaryStage.setTitle("2048");
-        primaryStage.getIcons().add(new Image(SaveAccount.class.getResourceAsStream("../logo.png")));
+        File iconImg = new File("src/main/resources/com/example/demo/logo.png");
+        primaryStage.getIcons().add(new Image(iconImg.toURI().toString()));
         // Read the text file when the game starts
         Account.readFile();
         // Set default CSS
-        UserSettings.pathToCSS = SaveAccount.class.getResource("../Themes/original.css");
+        File css = new File("src/main/resources/com/example/demo/Themes/original.css");
+        UserSettings.pathToCSS = css.toURI().toURL();
 
-        Parent menuRoot = FXMLLoader.load(getClass().getResource("./scenes/Menu.fxml"));
+        File menuFXML = new File("src/main/resources/com/example/demo/Scenes/Menu.fxml");
+        Parent menuRoot = FXMLLoader.load(menuFXML.toURI().toURL());
         Scene menuScene = new Scene(menuRoot, UserSettings.WIDTH, UserSettings.HEIGHT);
         menuScene.getStylesheets().add(UserSettings.pathToCSS.toExternalForm());
 

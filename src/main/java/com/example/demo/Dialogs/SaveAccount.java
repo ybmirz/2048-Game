@@ -53,7 +53,7 @@ public class SaveAccount {
     @FXML
     void save(ActionEvent event) {
         String newUsername = usernameText.getText();
-        newAcc = Account.makeNewAccount(newUsername, score);
+        this.newAcc = Account.makeNewAccount(newUsername, score);
         closeStage();
     }
 

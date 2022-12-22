@@ -99,7 +99,11 @@ public class SettingsController extends ReturningController {
             }
             Platform.runLater(() -> {
                 updateButtons();
-                updateImage();
+                try {
+                    updateImage();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 updateText();
 
                 if (UserSettings.pathToCSS != null)
@@ -142,9 +146,10 @@ public class SettingsController extends ReturningController {
      * 
      * @param event
      * @author Mirza Hizriyan
+     * @throws Exception
      */
     @FXML
-    void decreaseDiff(ActionEvent event) {
+    void decreaseDiff(ActionEvent event) throws Exception {
         switch (settDiff) {
             case EASY:
                 System.out.println("Error: Easy Difficulty tried to decrease.");
@@ -168,9 +173,10 @@ public class SettingsController extends ReturningController {
      * 
      * @param event
      * @author Mirza Hizriyan
+     * @throws Exception
      */
     @FXML
-    void increaseDiff(ActionEvent event) {
+    void increaseDiff(ActionEvent event) throws Exception {
         switch (settDiff) {
             case EASY:
                 settDiff = Difficulty.MEDIUM;
@@ -212,22 +218,25 @@ public class SettingsController extends ReturningController {
 
     /**
      * Updates the rendered Image based on current Difficulty
+     * @throws Exception
      */
-    private void updateImage() {
+    private void updateImage() throws Exception {
         diffImagePane.getChildren().clear();
-        Image img = null;
+        File img = null;
         switch (settDiff) {
             case EASY:
-                img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 3x3.jpg"));
+                img = new File("src/main/resources/com/example/demo/Images/2048 3x3.jpg");
                 break;
             case MEDIUM:
-                img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 4x4.png"));
+                img = new File("src/main/resources/com/example/demo/Images/2048 4x4.png");
                 break;
             case HARD:
-                img = new Image(SaveAccount.class.getResourceAsStream("../Images/2048 5x5.jpg"));
+                img = new File("src/main/resources/com/example/demo/Images/2048 5x5.jpg");
                 break;
         }
-        ImageView iv1 = new ImageView(img);
+        if (img == null)
+            throw new Exception("Error: Image is NULL or Not Found");
+        ImageView iv1 = new ImageView(new Image(img.toURI().toString()));
         iv1.setFitWidth(155);
         iv1.setFitHeight(150);
         diffImagePane.getChildren().addAll(iv1);

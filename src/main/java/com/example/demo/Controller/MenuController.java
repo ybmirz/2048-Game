@@ -50,7 +50,8 @@ public class MenuController {
     void startGame(ActionEvent event) throws IOException {
         // Gets primary stage from vBox
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
-        FXMLLoader gameLoad = new FXMLLoader(getClass().getResource("../Scenes/GameScene.fxml"));
+        File gameScene = new File("src/main/resources/com/example/demo/Scenes/GameScene.fxml");
+        FXMLLoader gameLoad = new FXMLLoader(gameScene.toURI().toURL());
         Parent gameRoot = gameLoad.load();
         GameController gameController = gameLoad.getController();
         gameController.setPrevScene(menuVBox.getScene());
@@ -68,7 +69,8 @@ public class MenuController {
     @FXML
     void openLeaderboard(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
-        FXMLLoader lbLoad = new FXMLLoader(getClass().getResource("../Scenes/Leaderboard.fxml"));
+        File lbScene = new File("src/main/resources/com/example/demo/Scenes/Leaderboard.fxml");
+        FXMLLoader lbLoad = new FXMLLoader(lbScene.toURI().toURL());
         Parent lbRoot = lbLoad.load();
         LeaderboardController lbControl = lbLoad.getController();
         lbControl.setPrevScene(menuVBox.getScene());
@@ -86,7 +88,8 @@ public class MenuController {
     @FXML
     void openSettings(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
-        FXMLLoader settingsLoad = new FXMLLoader(getClass().getResource("../Scenes/SettingsScene.fxml"));
+        File settScene = new File("src/main/resources/com/example/demo/Scenes/SettingsScene.fxml");
+        FXMLLoader settingsLoad = new FXMLLoader(settScene.toURI().toURL());
         Parent settingsRoot = settingsLoad.load();
         SettingsController settingsController = settingsLoad.getController();
         settingsController.setPrevScene(menuVBox.getScene());

@@ -8,7 +8,6 @@ import com.example.demo.Objects.Account;
 import com.example.demo.Objects.AccountCell;
 
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

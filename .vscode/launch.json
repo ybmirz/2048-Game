@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
+            "mainClass": "com.example.demo.Main",
+            "projectName": "demo"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
             "mainClass": "com.example.demo/com.example.demo.Main",
             "projectName": "COMP2042_CW_hfymh3_bfafc094"
         },

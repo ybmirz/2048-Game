@@ -12,5 +12,6 @@
         "src/main/resources"
     ],
     "docwriter.style": "Javadoc",
-    "docwriter.progress.trackClasses": false
+    "docwriter.progress.trackClasses": false,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
