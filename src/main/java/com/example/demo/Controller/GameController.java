@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.example.demo.EndGame;
 import com.example.demo.GameScene;
+import com.example.demo.Main;
 import com.example.demo.UserSettings;
 import com.example.demo.Dialogs.SaveAccount;
 import com.example.demo.Objects.Account;
@@ -168,7 +169,7 @@ public class GameController extends ReturningController {
     void retry(ActionEvent event) throws IOException {
         Stage primStage = (Stage) retryBtn.getScene().getWindow();
         File gameScene = new File("src/main/resources/com/example/demo/Scenes/GameScene.fxml");
-        FXMLLoader gameLoad = new FXMLLoader(gameScene.toURI().toURL());
+        FXMLLoader gameLoad = new FXMLLoader(Main.class.getResource("Scenes/GameScene.fxml"));
         Parent gameRoot = gameLoad.load();
         GameController gameController = gameLoad.getController();
         gameController.setPrevScene(this.getPrevScene());

@@ -33,15 +33,15 @@ public class Main extends Application {
         // Setting the primary stage
         primaryStage.setTitle("2048");
         File iconImg = new File("src/main/resources/com/example/demo/logo.png");
-        primaryStage.getIcons().add(new Image(iconImg.toURI().toString()));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
         // Read the text file when the game starts
         Account.readFile();
         // Set default CSS
         File css = new File("src/main/resources/com/example/demo/Themes/original.css");
-        UserSettings.pathToCSS = css.toURI().toURL();
+        UserSettings.pathToCSS = getClass().getResource("Themes/original.css");
 
         File menuFXML = new File("src/main/resources/com/example/demo/Scenes/Menu.fxml");
-        Parent menuRoot = FXMLLoader.load(menuFXML.toURI().toURL());
+        Parent menuRoot = FXMLLoader.load(getClass().getResource("Scenes/Menu.fxml"));
         Scene menuScene = new Scene(menuRoot, UserSettings.WIDTH, UserSettings.HEIGHT);
         menuScene.getStylesheets().add(UserSettings.pathToCSS.toExternalForm());
 

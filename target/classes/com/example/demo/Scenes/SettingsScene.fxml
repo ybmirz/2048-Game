@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="settingVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller.SettingsController">
+   <children>
+      <MenuBar fx:id="menuBar">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="chooseSaveFile" mnemonicParsing="false" onAction="#chooseSaveFile" text="Choose Save File..." />
+              <MenuItem fx:id="closeWindow" mnemonicParsing="false" onAction="#closeWindow" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="howToPlay" mnemonicParsing="false" onAction="#howToPlay" text="How to Play" />
+                  <MenuItem fx:id="about" mnemonicParsing="false" onAction="#about" text="About.." />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Text fx:id="settingsTextTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="100.0" />
+         </VBox.margin>
+      </Text>
+      <VBox prefHeight="280.0" prefWidth="700.0">
+         <children>
+            <BorderPane id="difficultyBorderPane" fx:id="difficultyBorderPane" prefHeight="234.0" prefWidth="500.0">
+               <top>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulty" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Text>
+               </top>
+               <bottom>
+                  <StackPane prefHeight="40.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Rectangle fx:id="diffTitleRec" arcHeight="5.0" arcWidth="5.0" fill="#dbdee1" height="35.0" stroke="TRANSPARENT" strokeLineCap="BUTT" strokeType="INSIDE" width="93.0" />
+                        <Text id="diffTitle" fx:id="diffTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Easy">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets top="10.0" />
+                     </BorderPane.margin>
+                  </StackPane>
+               </bottom>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <right>
+                  <AnchorPane prefHeight="132.0" prefWidth="166.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button id="diffRightBtn" fx:id="diffRightBtn" mnemonicParsing="false" onAction="#increaseDiff" prefHeight="50.0" prefWidth="45.0" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="55.0" />
+                     </children>
+                  </AnchorPane>
+               </right>
+               <left>
+                  <AnchorPane prefHeight="200.0" prefWidth="166.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button id="diffLeftBtn" fx:id="diffLeftBtn" mnemonicParsing="false" onAction="#decreaseDiff" prefHeight="50.0" prefWidth="52.0" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0" />
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <Pane id="diffImagePane" fx:id="diffImagePane" prefHeight="150.0" prefWidth="155.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </Pane>
+               </center>
+            </BorderPane>
+         </children>
+         <padding>
+            <Insets left="100.0" right="100.0" />
+         </padding>
+         <VBox.margin>
+            <Insets bottom="15.0" top="25.0" />
+         </VBox.margin>
+      </VBox>
+      <VBox alignment="TOP_CENTER" prefHeight="61.0" prefWidth="700.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="10.0" />
+         </VBox.margin>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Theme">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Text>
+            <Text id="selectedTitle" fx:id="selectedTitle" layoutX="327.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected: ">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Text>
+            <Button id="themeCombo" fx:id="themeCombo" mnemonicParsing="false" onAction="#changeTheme" text="Choose theme..." />
+         </children>
+      </VBox>
+      <AnchorPane prefHeight="200.0" prefWidth="700.0">
+         <children>
+            <Button fx:id="applyBtn" mnemonicParsing="false" onAction="#applySettings" text="Apply" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="115.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="backBtn" alignment="CENTER" mnemonicParsing="false" onAction="#returnMenu" prefHeight="37.0" prefWidth="67.0" text="Back" textAlignment="CENTER" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

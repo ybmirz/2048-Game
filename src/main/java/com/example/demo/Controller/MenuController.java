@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import java.io.File;
 import java.io.IOException;
 
+import com.example.demo.Main;
 import com.example.demo.UserSettings;
 import com.example.demo.Objects.Account;
 
@@ -51,7 +52,7 @@ public class MenuController {
         // Gets primary stage from vBox
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
         File gameScene = new File("src/main/resources/com/example/demo/Scenes/GameScene.fxml");
-        FXMLLoader gameLoad = new FXMLLoader(gameScene.toURI().toURL());
+        FXMLLoader gameLoad = new FXMLLoader(Main.class.getResource("Scenes/GameScene.fxml"));
         Parent gameRoot = gameLoad.load();
         GameController gameController = gameLoad.getController();
         gameController.setPrevScene(menuVBox.getScene());
@@ -70,7 +71,7 @@ public class MenuController {
     void openLeaderboard(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
         File lbScene = new File("src/main/resources/com/example/demo/Scenes/Leaderboard.fxml");
-        FXMLLoader lbLoad = new FXMLLoader(lbScene.toURI().toURL());
+        FXMLLoader lbLoad = new FXMLLoader(Main.class.getResource("Scenes/Leaderboard.fxml"));
         Parent lbRoot = lbLoad.load();
         LeaderboardController lbControl = lbLoad.getController();
         lbControl.setPrevScene(menuVBox.getScene());
@@ -89,7 +90,7 @@ public class MenuController {
     void openSettings(ActionEvent event) throws IOException {
         Stage primaryStage = (Stage) menuVBox.getScene().getWindow();
         File settScene = new File("src/main/resources/com/example/demo/Scenes/SettingsScene.fxml");
-        FXMLLoader settingsLoad = new FXMLLoader(settScene.toURI().toURL());
+        FXMLLoader settingsLoad = new FXMLLoader(Main.class.getResource("Scenes/SettingsScene.fxml"));
         Parent settingsRoot = settingsLoad.load();
         SettingsController settingsController = settingsLoad.getController();
         settingsController.setPrevScene(menuVBox.getScene());
