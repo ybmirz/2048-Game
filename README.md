@@ -15,9 +15,9 @@ There's two ways you can do this, either *download the packaged zip* and run the
 ```bash
 mvn clean javafx:run
 ```
-or *downloading the package zip* here, and running the following command in the directory:
+or *downloading the package zip* [here](https://github.com/ybmirz/COMP2042_CW_hfymh3/releases/tag/v1.0), and running the following command in the directory using `powershell`:
 ```bash
-./bin/launch
+launch
 ```
 
 ### Changes
