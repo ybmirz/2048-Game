@@ -11,9 +11,13 @@ Things I just did:
 - Removed `module-info.java` from the codebase bc VSC references the library for me (may have to change when compiling for Eclipse) (also because JDK16)
 
 ### Compile
-Ensure that you're in the root directory of `COMP2042_CW_hfymh3`, and run the following command. Please ensure that you replace the `dir/to/javafx/lib` with a corresponding JavaFX library reference.
+There's two ways you can do this, either *download the packaged zip* and run the `launch.sh` within the `bin` folder of the package, or `git clone` this repository and run the following command:
 ```bash
-java 
+mvn clean javafx:run
+```
+or *downloading the package zip* here, and running the following command in the directory:
+```bash
+./bin/launch
 ```
 
 ### Changes
@@ -73,26 +77,27 @@ java
         │               │       ReturningController.java -- new java file--
         │               │       SettingsController.java -- new java file--
         │               │
-        │               ├───Objects
-        │               │       Account.java
-        │               │       AccountCell.java
-        │               │       Cell.java
-        │               │       TextMaker.java
+        │               │───Dialogs
+        │               │       SaveAccount.fxml -- new java file--
+        │               │       SaveAccount.java -- new java file--
         │               │
-        │               └───Scenes
-        │                       GameScene.fxml --custom fxml--
-        │                       Leaderboard.fxml --custom fxml--
-        │                       Menu.fxml --custom fxml--
-        │                       SettingsScene.fxml --custom fxml--
+        │               └──Objects
+        │                       Account.java
+        │                       AccountCell.java
+        │                       Cell.java
+        │                       TextMaker.java
+        │               
         └───resources
             └───com
                 └───example
                     └───demo
                         │   logo.png
                         │
-                        ├───Dialogs
-                        │       SaveAccount.fxml -- new java file--
-                        │       SaveAccount.java -- new java file--
+                        ├───Scenes
+                        │       GameScene.fxml --custom fxml--
+                        │       Leaderboard.fxml --custom fxml--
+                        │       Menu.fxml --custom fxml--
+                        │       SettingsScene.fxml --custom fxml--
                         │
                         ├───Images
                         │       2048 3x3.jpg

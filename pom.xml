@@ -81,7 +81,7 @@
             <launcher>launch</launcher>
             <compress>2</compress>
             <jlinkZipName>2048_v1_hfymh3</jlinkZipName>
-            <jlinkImageName>COMP2042_hfymh3</jlinkImageName>
+            <jlinkImageName>2048_v1_hfymh3</jlinkImageName>
             <noManPages>true</noManPages>
             <noHeaderFiles>true</noHeaderFiles>
           </configuration>
